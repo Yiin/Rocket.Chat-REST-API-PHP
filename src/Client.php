@@ -36,7 +36,7 @@ class Client {
     {
         $response = $this->request(
             'POST', '/login', [
-            'body' => [
+            'form_params' => [
                 'username' => $username,
                 'password' => $password
             ]
@@ -60,7 +60,7 @@ class Client {
     {
         $response = $this->request(
             'POST', '/login', [
-            'body' => [
+            'form_params' => [
                 'username' => $username,
                 'password' => $password
             ]
