@@ -1,0 +1,24 @@
+{
+    "name": "yiin/rocket-chat-rest-api-php",
+    "description": "Rocket.chat REST API client in PHP.",
+    "keywords": ["rocket", "chat", "rest", "php"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stanislovas Janonis",
+            "email": "stanislovas.janonis@gmail.com"
+        }
+    ],
+    "require": {
+		"php": ">=7.0",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+	"require-dev": {
+		"phpunit/phpunit": "^7.0.2"
+    },
+	"autoload": {
+        "psr-4": {
+            "Yiin\\RocketChat\\": "src/"
+        }
+    }
+}
