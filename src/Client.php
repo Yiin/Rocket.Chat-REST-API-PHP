@@ -1,6 +1,7 @@
 <?php namespace Yiin\RocketChat;
 
 use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\RequestOptions;
 
 /**
  *  Rocket.chat REST API Client
@@ -36,7 +37,7 @@ class Client {
     {
         $response = $this->request(
             'POST', '/login', [
-            'form_params' => [
+            RequestOptions::JSON => [
                 'username' => $username,
                 'password' => $password
             ]
@@ -60,7 +61,7 @@ class Client {
     {
         $response = $this->request(
             'POST', '/login', [
-            'form_params' => [
+            RequestOptions::JSON => [
                 'username' => $username,
                 'password' => $password
             ]
