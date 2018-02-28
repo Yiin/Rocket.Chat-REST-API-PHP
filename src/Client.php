@@ -4,9 +4,10 @@ use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\RequestOptions;
 
 /**
- *  Rocket.chat REST API Client
+ * Rocket.chat REST API Client
  */
-class Client {
+class Client
+{
     /**
      * HTTP client that we use for communication with Rocket.chat REST API.
      * @var HttpClient
@@ -25,7 +26,7 @@ class Client {
     public function __construct(string $apiUrl)
     {
         $this->httpClient = new HttpClient([
-            'base_uri' => trim($apiUrl, '/')
+            'base_uri' => trim($apiUrl, '/') . '/'
         ]);
     }
 
@@ -36,7 +37,7 @@ class Client {
     public function loginAs($username, $password)
     {
         $response = $this->request(
-            'POST', '/login', [
+            'POST', 'login', [
             RequestOptions::JSON => [
                 'username' => $username,
                 'password' => $password
@@ -44,42 +45,62 @@ class Client {
         ]);
 
         if (($response->status ?? 'error') === 'success' ) {
-            $this->auth = [
-                'auth_token' => $response->data->authToken,
-                'user_id' => $response->data->userId
-            ];
+            $this->auth = $response->data;
             return true;
         } else {
+            $this->auth = null;
             throw $this->createExceptionFromResponse($response, 'loginAs');
         }
     }
 
     /**
-     * Get auth details of users Rocket.chat account.
+     * REST API Authentication
+     * https://rocket.chat/docs/developer-guides/rest-api/authentication/
      */
-    public function loginFor($username, $password)
+    public function authenticationAPI()
     {
-        $response = $this->request(
-            'POST', '/login', [
-            RequestOptions::JSON => [
-                'username' => $username,
-                'password' => $password
-            ]
-        ]);
-
-        return [
-            'auth_token' => $response->data->authToken,
-            'user_id' => $response->data->userId
-        ];
+        return new API\Authentication($this);
     }
 
-    protected function request($type, $endpoint, $options = [])
+    /**
+     * REST API Users
+     * https://rocket.chat/docs/developer-guides/rest-api/users/
+     */
+    public function usersAPI()
+    {
+        return new API\Users($this);
+    }
+
+    /**
+     * Helper methods
+     */
+    public function request($type, $endpoint, $options = [])
     {
         $response = $this->httpClient->request(
             $type, $endpoint, $options
         );
 
-        return json_decode((string) $response->getBody());
+        $responseBody = (string) $response->getBody();
+        $data = json_decode($responseBody);
+
+        if (json_last_error() === JSON_ERROR_NONE) {
+            return $data;
+        }
+        return $responseBody;
+    }
+
+    public function requestWithAuth($type, $endpoint, $options = [])
+    {
+        if (!$this->auth) {
+            return $this->request($type, $endpoint, $options);
+        }
+
+        return $this->request($type, $endpoint, array_merge($options, [
+            'headers' => [
+                'X-Auth-Token' => $this->auth->authToken,
+                'X-User-Id' => $this->auth->userId
+            ]
+        ]));
     }
 
     protected function createExceptionFromResponse($response, $prefix)
