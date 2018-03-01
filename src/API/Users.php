@@ -121,12 +121,12 @@ class Users
      * Gets a user’s information, limited to the caller’s permissions.
      * https://rocket.chat/docs/developer-guides/rest-api/users/info/
      */
-    public function info($userIdOrUsername)
+    public function info($identifier, $value)
     {
         $response = $this->client->requestWithAuth(
             'GET', 'users.getPreferences', [
             'query' => [
-                'userId' => $userIdOrUsername
+                $identifier => $value
             ]
         ]);
 
