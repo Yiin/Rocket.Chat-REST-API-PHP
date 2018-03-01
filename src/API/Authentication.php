@@ -1,6 +1,7 @@
 <?php namespace Yiin\RocketChat\API;
 
 use Yiin\RocketChat\Client;
+use GuzzleHttp\RequestOptions;
 
 class Authentication
 {
@@ -16,7 +17,7 @@ class Authentication
      */
     public function login($username, $password)
     {
-        $response = $this->request(
+        $response = $this->client->request(
             'POST', 'login', [
             RequestOptions::JSON => [
                 'username' => $username,
@@ -32,7 +33,7 @@ class Authentication
      */
     public function logout($authToken, $userId)
     {
-        $response = $this->request(
+        $response = $this->client->request(
             'GET', 'logout', [
             'headers' => [
                 'X-Auth-Token' => $authToken,

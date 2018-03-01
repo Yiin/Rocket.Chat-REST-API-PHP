@@ -1,6 +1,7 @@
 <?php namespace Yiin\RocketChat\API;
 
 use Yiin\RocketChat\Client;
+use GuzzleHttp\RequestOptions;
 
 class Users
 {
@@ -76,7 +77,7 @@ class Users
     {
         $response = $this->client->request(
             'GET', 'users.getAvatar', [
-            RequestOptions::JSON => [
+            'query' => [
                 $identifier => $value
             ]
         ]);
@@ -94,8 +95,8 @@ class Users
     public function getPresence($optionalIdentifier = null, $optionalValue = null)
     {
         $response = $this->client->requestWithAuth(
-            'GET', 'users.getPresence', $optionalIdentifier && $optionalValue ? [
-            RequestOptions::JSON => [
+            'GET', 'users.getPresence', [
+            'query' => $optionalIdentifier && $optionalValue ? [
                 $optionalIdentifier => $optionalValue
             ] : []
         ]);
@@ -111,7 +112,7 @@ class Users
     {
         $response = $this->client->requestWithAuth(
             'GET', 'users.getPreferences'
-        ]);
+        );
 
         return $response;
     }
@@ -124,7 +125,7 @@ class Users
     {
         $response = $this->client->requestWithAuth(
             'GET', 'users.getPreferences', [
-            RequestOptions::JSON => [
+            'query' => [
                 'userId' => $userIdOrUsername
             ]
         ]);
@@ -140,7 +141,7 @@ class Users
     {
         $response = $this->client->requestWithAuth(
             'GET', 'users.getPreferences', [
-            RequestOptions::JSON => array_filter([
+            'query' => array_filter([
                 'fields' => $optionalFields,
                 'query' => $optionalQuery
             ])
@@ -156,7 +157,7 @@ class Users
     public function register($username, $password, $name, $email, $optionalSecretURL = null)
     {
         $response = $this->client->request(
-            'GET', 'users.register', [
+            'POST', 'users.register', [
             RequestOptions::JSON => array_filter([
                 'username' => $username,
                 'password' => $password,
@@ -176,7 +177,7 @@ class Users
     public function resetAvatar($type, $value)
     {
         $response = $this->client->requestWithAuth(
-            'GET', 'users.resetAvatar', [
+            'POST', 'users.resetAvatar', [
             RequestOptions::JSON => [
                 $type => $value
             ]
