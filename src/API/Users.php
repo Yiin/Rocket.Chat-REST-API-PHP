@@ -124,7 +124,7 @@ class Users
     public function info($identifier, $value)
     {
         $response = $this->client->requestWithAuth(
-            'GET', 'users.getPreferences', [
+            'GET', 'users.info', [
             'query' => [
                 $identifier => $value
             ]
@@ -140,7 +140,7 @@ class Users
     public function list($optionalFields = null, $optionalQuery = null)
     {
         $response = $this->client->requestWithAuth(
-            'GET', 'users.getPreferences', [
+            'GET', 'users.list', [
             'query' => array_filter([
                 'fields' => $optionalFields,
                 'query' => $optionalQuery
@@ -160,7 +160,7 @@ class Users
             'POST', 'users.register', [
             RequestOptions::JSON => array_filter([
                 'username' => $username,
-                'password' => $password,
+                'pass' => $password,
                 'name' => $name,
                 'email' => $email,
                 'secretURL' => $optionalSecretURL
