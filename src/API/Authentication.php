@@ -43,4 +43,13 @@ class Authentication
 
         return $response->data;
     }
+
+    public function me()
+    {
+        $response = $this->client->requestWithAuth(
+            'GET', 'me'
+        );
+
+        return $response;
+    }
 }
