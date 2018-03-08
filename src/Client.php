@@ -53,6 +53,20 @@ class Client
         }
     }
 
+    public function authenticateWith($authKey, $userId, Callable $callback)
+    {
+        $auth = $this->auth;
+
+        $this->auth = [
+            'authKey' => $authKey,
+            'userId' => $userId
+        ];
+
+        $callback();
+
+        $this->auth = $auth;
+    }
+
     /**
      * REST API Authentication
      * https://rocket.chat/docs/developer-guides/rest-api/authentication/

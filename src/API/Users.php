@@ -185,4 +185,39 @@ class Users
 
         return $response;
     }
+
+    /**
+     * Set a user’s avatar
+     * https://rocket.chat/docs/developer-guides/rest-api/users/setavatar/
+     */
+    public function setAvatar($avatarUrl, $optionalIdentifier = null, $optionalValue = null)
+    {
+        $response = $this->client->requestWithAuth(
+            'POST', 'users.setAvatar', [
+            RequestOptions::JSON => [
+                'avatarUrl' => $avatarUrl
+            ] + ($optionalIdentifier && $optionalValue) ? [
+                $optionalIdentifier => $optionalValue
+            ] : []
+        ]);
+
+        return $response;
+    }
+
+    /**
+     * Update an existing user.
+     * https://rocket.chat/docs/developer-guides/rest-api/users/update/
+     */
+    public function update($userId, $data = [])
+    {
+        $response = $this->client->requestWithAuth(
+            'POST', 'users.update', [
+            RequestOptions::JSON => [
+                'userId' => $userId,
+                'data' => $data
+            ]
+        ]);
+
+        return $response;
+    }
 }
