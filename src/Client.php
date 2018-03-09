@@ -64,9 +64,11 @@ class Client
         $this->auth->authToken = $authToken;
         $this->auth->userId = $userId;
 
-        $callback();
+        $ret = $callback();
 
         $this->auth = $auth;
+
+        return $ret;
     }
 
     /**
