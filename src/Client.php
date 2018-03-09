@@ -53,14 +53,16 @@ class Client
         }
     }
 
-    public function authenticateWith($authKey, $userId, Callable $callback)
+    public function authenticateWith($authToken, $userId, Callable $callback)
     {
         $auth = $this->auth;
 
-        $this->auth = [
-            'authKey' => $authKey,
-            'userId' => $userId
-        ];
+        if (!$this->auth) {
+            $this->auth = new \stdClass;
+        }
+
+        $this->auth->authToken = $authToken;
+        $this->auth->userId = $userId;
 
         $callback();
 
