@@ -90,6 +90,15 @@ class Client
     }
 
     /**
+     * REST API Groups
+     * https://rocket.chat/docs/developer-guides/rest-api/groups/
+     */
+    public function groupsAPI()
+    {
+        return new API\Groups($this);
+    }
+
+    /**
      * Helper methods
      */
     public function request($type, $endpoint, $options = [])
