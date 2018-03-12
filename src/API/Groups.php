@@ -37,7 +37,7 @@ class Groups
     public function create($name, $members = null, $readOnly = null)
     {
         $response = $this->client->requestWithAuth(
-            'POST', 'groups.addAll', [
+            'POST', 'groups.create', [
             RequestOptions::JSON => array_filter([
                 'name' => $name,
                 'members' => $members,
@@ -58,6 +58,23 @@ class Groups
             'POST', 'groups.info', [
             RequestOptions::JSON => [
                 $key => $nameOrId
+            ]
+        ]);
+
+        return $response;
+    }
+
+    /**
+     * Adds a user to the private group.
+     * https://rocket.chat/docs/developer-guides/rest-api/groups/invite/
+     */
+    public function invite($roomId, $userId)
+    {
+        $response = $this->client->requestWithAuth(
+            'POST', 'groups.info', [
+            RequestOptions::JSON => [
+                'roomId' => $roomId,
+                'userId' => $userId
             ]
         ]);
 
