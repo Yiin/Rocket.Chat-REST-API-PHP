@@ -57,10 +57,7 @@ class Client
     {
         $auth = $this->auth;
 
-        if (!$this->auth) {
-            $this->auth = new \stdClass;
-        }
-
+        $this->auth = new \stdClass;
         $this->auth->authToken = $authToken;
         $this->auth->userId = $userId;
 
