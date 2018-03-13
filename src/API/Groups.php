@@ -87,7 +87,7 @@ class Groups
     public function invite($roomId, $userId)
     {
         $response = $this->client->requestWithAuth(
-            'POST', 'groups.info', [
+            'POST', 'groups.invite', [
             RequestOptions::JSON => [
                 'roomId' => $roomId,
                 'userId' => $userId
