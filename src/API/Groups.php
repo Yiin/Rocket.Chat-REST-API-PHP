@@ -65,6 +65,22 @@ class Groups
     }
 
     /**
+     * Retrieves the list of users in the group.
+     * https://github.com/RocketChat/Rocket.Chat/blob/490fa2daa94eb34270722d074ad036322dada7b2/packages/rocketchat-api/server/v1/groups.js#L374
+     */
+    public function members($key, $nameOrId)
+    {
+        $response = $this->client->requestWithAuth(
+            'GET', 'groups.members', [
+            'query' => [
+                $key => $nameOrId
+            ]
+        ]);
+
+        return $response;
+    }
+
+    /**
      * Adds a user to the private group.
      * https://rocket.chat/docs/developer-guides/rest-api/groups/invite/
      */
