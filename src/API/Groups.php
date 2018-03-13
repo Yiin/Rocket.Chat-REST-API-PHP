@@ -55,8 +55,8 @@ class Groups
     public function info($key, $nameOrId)
     {
         $response = $this->client->requestWithAuth(
-            'POST', 'groups.info', [
-            RequestOptions::JSON => [
+            'GET', 'groups.info', [
+            'query' => [
                 $key => $nameOrId
             ]
         ]);
