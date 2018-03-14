@@ -96,4 +96,21 @@ class Groups
 
         return $response;
     }
+
+    /**
+     * Removes a user from the private group.
+     * https://rocket.chat/docs/developer-guides/rest-api/groups/kick/
+     */
+    public function kick($roomId, $userId)
+    {
+        $response = $this->client->requestWithAuth(
+            'POST', 'groups.kick', [
+            RequestOptions::JSON => [
+                'roomId' => $roomId,
+                'userId' => $userId
+            ]
+        ]);
+
+        return $response;
+    }
 }
