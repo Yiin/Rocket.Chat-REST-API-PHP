@@ -96,6 +96,15 @@ class Client
     }
 
     /**
+     * REST API Channels
+     * https://rocket.chat/docs/developer-guides/rest-api/channels/
+     */
+    public function channelsAPI()
+    {
+        return new API\Channels($this);
+    }
+
+    /**
      * Helper methods
      */
     public function request($type, $endpoint, $options = [])
