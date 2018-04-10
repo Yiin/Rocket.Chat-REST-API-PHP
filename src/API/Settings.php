@@ -45,7 +45,7 @@ class Settings
     public function update($_id, $value)
     {
         $response = $this->client->requestWithAuth(
-            'POST', "settings/$id", [
+            'POST', "settings/$_id", [
             RequestOptions::JSON => [
                 'value' => $value
             ]
