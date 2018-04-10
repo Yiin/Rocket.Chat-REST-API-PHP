@@ -105,6 +105,15 @@ class Client
     }
 
     /**
+     * REST API Settings
+     * https://rocket.chat/docs/developer-guides/rest-api/settings/
+     */
+    public function settingsAPI()
+    {
+        return new API\Settings($this);
+    }
+
+    /**
      * Helper methods
      */
     public function request($type, $endpoint, $options = [])
