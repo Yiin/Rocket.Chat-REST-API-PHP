@@ -14,13 +14,14 @@ class Authentication
 
     /**
      * Authenticate with the REST API.
+     * https://rocket.chat/docs/developer-guides/rest-api/authentication/login/
      */
-    public function login($username, $password)
+    public function login($user, $password)
     {
         $response = $this->client->request(
             'POST', 'login', [
             RequestOptions::JSON => [
-                'username' => $username,
+                'user' => $user,
                 'password' => $password
             ]
         ]);
@@ -30,6 +31,7 @@ class Authentication
 
     /**
      * Invalidate your REST API authentication token.
+     * https://rocket.chat/docs/developer-guides/rest-api/authentication/logout/
      */
     public function logout($authToken, $userId)
     {
@@ -44,6 +46,10 @@ class Authentication
         return $response->data;
     }
 
+    /**
+     * Quick information about the authenticated user.
+     * https://rocket.chat/docs/developer-guides/rest-api/authentication/me/
+     */
     public function me()
     {
         $response = $this->client->requestWithAuth(
